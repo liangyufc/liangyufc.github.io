@@ -1,0 +1,91 @@
+---
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Basic Page Needs-->
+        <meta charset="utf-8">
+        <title>{{ site.title }}</title>
+        <meta name="description" content="Acasemic Website">
+        <meta name="author" content="{{ site.author }}">
+        <!-- Mobile Specific Metas-->
+        <meta name="viewpoint" content="width=device-width, initial-scale=1"> 
+        <!-- Font -->
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" href="/assets/css/normalize.css">
+        <link rel="stylesheet" href="/assets/css/skeleton.css">
+        <link rel="stylesheet" href="/assets/css/custom.css">
+        <link rel="stylesheet" href="/assets/css/social-circles.min.css">
+        <style>
+          a { text-decoration: none; }
+        </style>
+        <!-- Favicon-->
+        <link rel="icon" type="image/png" href="{{ site.icon }}">
+      </head>
+      <body>
+        <!-- Primary Page Layout -->
+        <div class="navbar-spacer"></div>
+          <nav class="navbar">
+            <div class="container">
+              <ul class="navbar-list">
+                <li class="navbar-item"><a class="navbar-link" href="#about">About</a></li>
+              </ul>
+            </div>
+          </nav>
+      
+          <div class="container">
+            <div class="row">
+              <div class="one-half column" style="margin-top: 15%">
+                <img class = "bio-image" src="{{ page.photo }}">
+              </div>
+              <div class="one-half column" style="margin-top: 15%">
+                <h2>{{ page.title }}</h2>
+                <p>{{ page.description }}<br/>
+                <a href="{{ page.major_link }}" target="_blank">{{ page.major }}</a><br/>
+                <a href="{{ page.school_link }}" target="_blank">{{ page.school }}</a><br/></p>
+                <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i><span itemprop="name"> {{page.location}}</span><br/>
+                <i class="far fa-fw fa-envelope"></i><a href="mailto: {{ site.email }}"> {{ site.email }}</a><br/>
+                <!--<i class="fab fa-fw fa-github" aria-hidden="true"></i><a href="{{ page.github }}" target="_blank"> GitHub</a><br/>-->
+                <i class="far fa-fw fa-file"></i><a href="{{ page.cv }}" target="_blank"> CV[PDF]</a>, last updated Jan. 2020
+              </div>
+            </div>
+      
+            <div class="row" style="margin-top: 10%" id="about">
+              <p>{{ content }}</p>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="two columns aboutme-exp" style="margin-top: 2%" >
+                <img src="{{ page.research_logo }}" width="50%">
+                <p>KU Leuven</br>International Scholar</br>Belgium</p>
+              </div>
+              <div class="two columns aboutme-exp" style="margin-top: 2%" >
+                <img src="{{ page.aetherAI_logo }}" width="50%">
+                <p>aetherAI</br>Development Intern</br>Taiwan</p>
+              </div>
+              <div class="two columns aboutme-exp" style="margin-top: 2%" >
+                <img src="{{ page.graduate_logo }}" width="50%">
+                <p>NCTU</br>MS in CS</br>Taiwan</p>
+              </div>
+              <div class="two columns aboutme-exp" style="margin-top: 2%" >
+                <img src="{{ page.pandp_logo }}" width="50%">
+                <p>Plug and Play</br>Development Intern</br>USA</p>
+              </div>
+              <div class="two columns aboutme-exp" style="margin-top: 2%" >
+                <img src="{{ page.onysus_logo }}" width="50%">
+                <p>Onysus</br>Development Intern</br>Israel</p>
+              </div>
+              <div class="two columns aboutme-exp" style="margin-top: 2%" >
+                <img src="{{ page.university_logo }}" width="50%">
+                <p>NTHU</br>BS in CS & QF</br>Taiwan</p>
+              </div>
+            </div>
+        
+        </div>
+
+      </body>
+</html>
