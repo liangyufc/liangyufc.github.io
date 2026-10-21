@@ -30,7 +30,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
       <section class="content-section projects-section" id="projects" aria-labelledby="projects-heading">
         <div class="section-heading"><span class="section-number" aria-hidden="true">02 /</span><h2 id="projects-heading">Selected projects</h2></div>
         <ul class="project-list">
-          {projects.map(({ data }) => <ProjectLink {...data} />)}
+          {projects.map(({ id, data }) => <ProjectLink {...data} href={`/projects/${id}/`} />)}
         </ul>
       </section>
 

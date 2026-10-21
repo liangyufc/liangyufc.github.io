@@ -1,8 +1,15 @@
+---
+interface Props {
+  home?: boolean;
+}
+const { home = true } = Astro.props;
+const sectionLink = (section: string) => `${home ? '' : '/'}#${section}`;
+---
 <header class="site-header">
-  <a class="wordmark" href="#top" aria-label="Liang, back to top">liang<span aria-hidden="true">.</span></a>
+  <a class="wordmark" href={sectionLink('top')} aria-label="Liang, back to top">lng<span aria-hidden="true">.</span></a>
   <nav aria-label="Main navigation">
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
+    <a href={sectionLink('about')}>About</a>
+    <a href={sectionLink('projects')}>Projects</a>
+    <a href={sectionLink('contact')}>Contact</a>
   </nav>
 </header>
