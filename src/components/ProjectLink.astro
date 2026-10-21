@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  order: number;
+  url: string;
+  description?: string;
+}
+const { title, order, url, description } = Astro.props;
+---
+<li class="project-item">
+  <a class="project-link" href={url}>
+    <span class="project-number" aria-hidden="true">{String(order).padStart(2, '0')}</span>
+    <span class="project-copy">
+      <span class="project-title">{title}</span>
+      {description && <span class="project-description">{description}</span>}
+      <span class="project-destination">View on Notion</span>
+    </span>
+    <span class="project-arrow" aria-hidden="true">↗</span>
+  </a>
+</li>

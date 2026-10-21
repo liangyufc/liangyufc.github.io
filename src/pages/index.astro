@@ -1,0 +1,48 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import ProjectLink from '../components/ProjectLink.astro';
+
+const profile = await getEntry('profile', 'liang');
+if (!profile) throw new Error('Missing profile: src/content/profile/liang.md');
+const { Content } = await render(profile);
+const { name, greeting, introduction, email, description } = profile.data;
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+<PageLayout title={`${name} — Data, code & curiosity`} description={description}>
+  <div class="page-shell" id="top">
+    <SiteHeader />
+    <main id="main">
+      <section class="hero" aria-labelledby="intro-heading">
+        <p class="eyebrow"><span class="small-star" aria-hidden="true">✳</span> A little corner of the internet</p>
+        <h1 id="intro-heading">{greeting}<span class="accent">.</span></h1>
+        <p class="hero-introduction">{introduction}</p>
+        <p class="hero-detail">Data science, machine learning, and the joy of building.</p>
+        <a class="text-link hero-link" href="#projects">Explore my projects <span aria-hidden="true">↓</span></a>
+      </section>
+
+      <section class="content-section about-section" id="about" aria-labelledby="about-heading">
+        <div class="section-heading"><span class="section-number" aria-hidden="true">01 /</span><h2 id="about-heading">A bit about me</h2></div>
+        <div class="prose"><Content /></div>
+      </section>
+
+      <section class="content-section projects-section" id="projects" aria-labelledby="projects-heading">
+        <div class="section-heading"><span class="section-number" aria-hidden="true">02 /</span><h2 id="projects-heading">Selected projects</h2></div>
+        <ul class="project-list">
+          {projects.map(({ data }) => <ProjectLink {...data} />)}
+        </ul>
+      </section>
+
+      <section class="content-section contact-section" id="contact" aria-labelledby="contact-heading">
+        <div class="section-heading"><span class="section-number" aria-hidden="true">03 /</span><h2 id="contact-heading">Say hej.</h2></div>
+        <p>Have an idea, a question, or just want to say hello?</p>
+        <a class="email-link" href={`mailto:${email}`}>{email}<span aria-hidden="true">↗</span></a>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <span>© {new Date().getFullYear()} {name}</span>
+      <span>Made with curiosity <span class="accent" aria-hidden="true">✳</span></span>
+    </footer>
+  </div>
+</PageLayout>
