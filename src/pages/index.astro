@@ -19,8 +19,13 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
         <h1 id="intro-heading">{greeting}<span class="accent">.</span></h1>
         <p class="hero-introduction">{introduction}</p>
         <p class="hero-detail">Data science, machine learning, and the joy of building.</p>
-        <a class="text-link hero-link" href="#projects">Explore my projects <span aria-hidden="true">↓</span></a>
       </section>
+
+      <nav class="section-tabs" aria-label="Profile sections">
+        <a id="tab-about" href="#about">About</a>
+        <a id="tab-projects" href="#projects">Projects</a>
+        <a id="tab-contact" href="#contact">Contact</a>
+      </nav>
 
       <section class="content-section about-section" id="about" aria-labelledby="about-heading">
         <div class="section-heading"><span class="section-number" aria-hidden="true">01 /</span><h2 id="about-heading">A bit about me</h2></div>
@@ -46,3 +51,62 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     </footer>
   </div>
 </PageLayout>
+
+<script>
+  const tabList = document.querySelector<HTMLElement>('.section-tabs');
+  const tabs = Array.from(tabList?.querySelectorAll<HTMLAnchorElement>('a') ?? []);
+  const panels = tabs.map((tab) => document.querySelector<HTMLElement>(tab.hash));
+
+  if (tabList && tabs.length && panels.every((panel) => panel !== null)) {
+    tabList.setAttribute('role', 'tablist');
+    tabs.forEach((tab, index) => {
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-controls', panels[index]!.id);
+      panels[index]!.setAttribute('role', 'tabpanel');
+      panels[index]!.setAttribute('aria-labelledby', tab.id);
+      panels[index]!.tabIndex = 0;
+    });
+
+    function activateTab(hash: string) {
+      const selected = Math.max(0, tabs.findIndex((tab) => tab.hash === hash));
+      tabs.forEach((tab, index) => {
+        const active = index === selected;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        panels[index]!.hidden = !active;
+      });
+    }
+
+    function selectTab(tab: HTMLAnchorElement) {
+      if (window.location.hash !== tab.hash) {
+        window.history.pushState(null, '', tab.hash);
+      }
+      activateTab(tab.hash);
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        selectTab(tab);
+      });
+      tab.addEventListener('keydown', (event) => {
+        let nextIndex: number;
+        switch (event.key) {
+          case 'ArrowRight': nextIndex = (index + 1) % tabs.length; break;
+          case 'ArrowLeft': nextIndex = (index - 1 + tabs.length) % tabs.length; break;
+          case 'Home': nextIndex = 0; break;
+          case 'End': nextIndex = tabs.length - 1; break;
+          default: return;
+        }
+        event.preventDefault();
+        selectTab(tabs[nextIndex]);
+        tabs[nextIndex].focus();
+      });
+    });
+
+    window.addEventListener('popstate', () => activateTab(window.location.hash));
+    window.addEventListener('hashchange', () => activateTab(window.location.hash));
+    activateTab(window.location.hash);
+  }
+</script>
