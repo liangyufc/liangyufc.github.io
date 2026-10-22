@@ -14,36 +14,40 @@ In this project, we apply **RolX**, a structural role discovery algorithm, to th
 
 We use the [Erasmus mobility dataset](https://data.mendeley.com/datasets/vnxdvh6998/3) published by L. Gadár et al. on Mendeley Data. Our analysis focuses on student mobility: vertices represent participating institutions, and edges represent student exchanges between them.
 
-<figure>
+<div class="figure-carousel" data-label="Network visualizations">
+<figure data-figure-label="Overview">
   <img src="/images/projects/data-mining/erasmus-network.png" alt="Overview of the Erasmus exchange network." />
   <figcaption>Overview of the Erasmus exchange network.</figcaption>
 </figure>
 
-<div class="figure-row">
-  <figure>
+  <figure data-figure-label="Fig. 1 · Circular">
     <img src="/images/projects/data-mining/circular-network.png" alt="Figure 1. Circular plot of 10% of the network." />
     <figcaption>Figure 1. Circular plot of 10% of the network.</figcaption>
   </figure>
-  <figure>
+  <figure data-figure-label="Fig. 2 · Spring">
     <img src="/images/projects/data-mining/spring-network.png" alt="Figure 2. Spring plot of 10% of the network." />
     <figcaption>Figure 2. Spring plot of 10% of the network.</figcaption>
   </figure>
 </div>
 
-<figure>
+## Analysis
+
+<div class="figure-carousel" data-label="Role analysis">
+<figure data-figure-label="Fig. 3 · Connectedness">
   <img src="/images/projects/data-mining/role-connectedness.png" alt="Figure 3. Internal connectedness of individual roles, with 100 nodes selected for each role." />
   <figcaption>Figure 3. Internal connectedness of individual roles, with 100 nodes selected for each role.</figcaption>
 </figure>
 
-<figure>
+<figure data-figure-label="Fig. 4 · NodeSense">
   <img src="/images/projects/data-mining/node-sense.png" alt="Figure 4. NodeSense analysis of network metrics for each role." />
   <figcaption>Figure 4. NodeSense analysis of network metrics for each role.</figcaption>
 </figure>
 
-<figure>
+<figure data-figure-label="Fig. 5 · NeighborSense">
   <img src="/images/projects/data-mining/neighbor-sense.png" alt="Figure 5. NeighborSense analysis of connectivity between roles." />
   <figcaption>Figure 5. NeighborSense analysis of connectivity between roles.</figcaption>
 </figure>
+</div>
 
 ## Role Interpretation
 

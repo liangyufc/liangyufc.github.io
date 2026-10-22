@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import FigureCarousel from '../../components/FigureCarousel.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -42,4 +43,5 @@ const { name } = profile.data;
       <a href="/#projects">Back to selected projects</a>
     </footer>
   </div>
+  <FigureCarousel />
 </PageLayout>

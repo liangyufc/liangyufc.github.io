@@ -1,0 +1,74 @@
+<script>
+  document.querySelectorAll<HTMLElement>('.figure-carousel').forEach((viewer) => {
+    const slides = Array.from(viewer.querySelectorAll<HTMLElement>(':scope > figure'));
+    if (slides.length < 2) return;
+
+    viewer.setAttribute('role', 'region');
+    viewer.setAttribute('aria-roledescription', 'carousel');
+    viewer.setAttribute('aria-label', viewer.dataset.label ?? 'Figures');
+    viewer.tabIndex = 0;
+
+    const controls = document.createElement('div');
+    controls.className = 'figure-carousel-controls';
+    const previous = document.createElement('button');
+    previous.type = 'button';
+    previous.textContent = '←';
+    previous.setAttribute('aria-label', 'Previous figure');
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.textContent = '→';
+    next.setAttribute('aria-label', 'Next figure');
+    const status = document.createElement('span');
+    status.setAttribute('aria-live', 'polite');
+    status.setAttribute('aria-atomic', 'true');
+    controls.append(previous, status, next);
+
+    slides.forEach((slide, index) => {
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.setAttribute('aria-label', `${index + 1} of ${slides.length}`);
+    });
+
+    let current = 0;
+    function select(index: number) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => { slide.hidden = i !== current; });
+      status.textContent = `${current + 1} / ${slides.length} · ${slides[current].dataset.figureLabel ?? 'Figure'}`;
+      status.title = status.textContent;
+    }
+
+    previous.addEventListener('click', () => select(current - 1));
+    next.addEventListener('click', () => select(current + 1));
+    viewer.addEventListener('keydown', (event) => {
+      switch (event.key) {
+        case 'ArrowLeft': select(current - 1); break;
+        case 'ArrowRight': select(current + 1); break;
+        case 'Home': select(0); break;
+        case 'End': select(slides.length - 1); break;
+        default: return;
+      }
+      event.preventDefault();
+    });
+
+    let touchStart: { x: number; y: number } | undefined;
+    viewer.addEventListener('touchstart', (event) => {
+      touchStart = event.touches.length === 1
+        ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+        : undefined;
+    }, { passive: true });
+    viewer.addEventListener('touchend', (event) => {
+      if (!touchStart || !event.changedTouches.length) return;
+      const dx = event.changedTouches[0].clientX - touchStart.x;
+      const dy = event.changedTouches[0].clientY - touchStart.y;
+      touchStart = undefined;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        select(current + (dx < 0 ? 1 : -1));
+      }
+    }, { passive: true });
+    viewer.addEventListener('touchcancel', () => { touchStart = undefined; });
+
+    select(0);
+    viewer.append(controls);
+    viewer.classList.add('carousel-ready');
+  });
+</script>
